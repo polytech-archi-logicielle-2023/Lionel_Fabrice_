@@ -50,11 +50,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<User> deleteUserById(@PathVariable Integer userId) {
-        User user = userService.getUserById(userId);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        userService.deleteUser(user);
+        userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
