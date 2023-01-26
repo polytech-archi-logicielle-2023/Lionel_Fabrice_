@@ -20,6 +20,9 @@ public class User {
     // NB: words in name should be linked by underscore => name_of_column
     private String name;
 
+    @Column(name = "password", length = 50)
+    private String password;
+
     @Column(name = "email", length = 100)
     private String email;
 
