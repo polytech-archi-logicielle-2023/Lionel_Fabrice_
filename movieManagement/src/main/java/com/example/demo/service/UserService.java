@@ -6,20 +6,52 @@ import java.util.*;
 
 @Service
 public class UserService {
-    public List<User> getAllUsers() {
+
+    public List<User> list = new ArrayList<>();
+    public Integer id = 1;
+
+    public void initUsers() {
         User user1 = new User();
         user1.setName("user1");
         user1.setEmail("mail@test.com");
+        user1.setId(this.id++);
 
         User user2 = new User();
         user2.setName("user2");
         user2.setEmail("mail2@test.com");
+        user2.setId(this.id++);
 
-        List<User> list = new ArrayList<>();
-        list.add(user1);
-        list.add(user2);
-
-        return list;
+        this.list.add(user1);
+        this.list.add(user2);
     }
 
+    public List<User> getAllUsers() {
+        if (this.list.isEmpty()) {
+            this.initUsers();
+        }
+        return this.list;
+    }
+
+    public User getUserById(Integer id) {
+
+        for (User user : this.list) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User createUser(User givenUser) {
+        if (givenUser.getName() != null && givenUser.getEmail() != null) {
+            givenUser.setId(this.id++);
+            this.list.add(givenUser);
+            return givenUser;
+        }
+        return null;
+    }
+    public User deleteUser(User givenUser) {
+        this.list.remove(givenUser);
+        return null;
+    }
 }
