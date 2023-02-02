@@ -26,4 +26,6 @@ public class Film{
     @Column(name = "type", length = 100)
     private String type;
 
+    // private Integer author;
+
 }
