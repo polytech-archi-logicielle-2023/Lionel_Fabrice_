@@ -12,7 +12,7 @@ public class UserService {
     public Integer id = 1;
     public UserService(UserRepository repository) {
         this.repository = repository;
-        this.initUsers();
+        //this.initUsers();
     }
     public void initUsers() {
         User user1 = new User();
@@ -42,7 +42,6 @@ public class UserService {
     }
 
     public User createUser(User givenUser) {
-
         if (givenUser.getName() != null && givenUser.getEmail() != null) {
             return this.repository.save(givenUser);
         }

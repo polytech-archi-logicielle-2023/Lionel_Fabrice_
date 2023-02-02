@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.example.demo.dto.UserDTO;
+import com.example.demo.mapper.UserMapper;
 
 import java.util.*;
 
@@ -25,27 +27,34 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<User>> getAllUsers() {
-
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        List<UserDTO> usersDtos = UserMapper.toUserDTOList(users);
+        return ResponseEntity.ok(usersDtos);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer userId) {
+
         User user = userService.getUserById(userId);
+
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(user);
+        UserDTO dto = UserMapper.toUserDTO(user);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping("")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO dto) {
+        User fromDto = UserMapper.toUser(dto);
+        User createdUser = userService.createUser(fromDto);
+        System.out.println(createdUser);
         if (createdUser == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(user);
+        UserDTO createdUserDto = UserMapper.toUserDTO(createdUser);
+        return ResponseEntity.ok(createdUserDto);
     }
 
     @DeleteMapping("/{userId}")
