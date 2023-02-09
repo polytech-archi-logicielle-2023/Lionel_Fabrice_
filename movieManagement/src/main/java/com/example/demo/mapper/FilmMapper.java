@@ -7,7 +7,7 @@ import java.util.*;
 
 public class FilmMapper {
 
-    private final UserService userService;
+    //private final UserService userService = 0;
 
     //public UserController(UserService userService) {this.userService = userService;}
 
@@ -16,7 +16,7 @@ public class FilmMapper {
                 .title(film.getTitle())
                 .realisator(film.getRealisator())
                 .type(film.getType())
-                .author(userService.getUserById(film.getIdAuthor()))
+                .idAuthor(film.getIdAuthor())
                 .build();
     }
 
